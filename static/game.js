@@ -67,17 +67,21 @@ function playStatic(duration = 0.16) {
 }
 
 function playSound(event) {
-  if (event === 'start') {
-    playTone(420, 620, 0.11, 'square', 0.025);
-    playTone(620, 940, 0.14, 'triangle', 0.03, 0.1);
-  } else if (event === 'flap') {
-    playTone(760, 430, 0.07, 'triangle', 0.018);
-  } else if (event === 'score') {
-    playTone(660, 880, 0.08, 'square', 0.025);
-    playTone(880, 1180, 0.1, 'triangle', 0.03, 0.07);
-  } else if (event === 'crash') {
-    playTone(190, 48, 0.32, 'sawtooth', 0.055);
-    playStatic();
+  try {
+    if (event === 'start') {
+      playTone(420, 620, 0.11, 'square', 0.025);
+      playTone(620, 940, 0.14, 'triangle', 0.03, 0.1);
+    } else if (event === 'flap') {
+      playTone(760, 430, 0.07, 'triangle', 0.018);
+    } else if (event === 'score') {
+      playTone(660, 880, 0.08, 'square', 0.025);
+      playTone(880, 1180, 0.1, 'triangle', 0.03, 0.07);
+    } else if (event === 'crash') {
+      playTone(190, 48, 0.32, 'sawtooth', 0.055);
+      playStatic();
+    }
+  } catch {
+    // Audio support varies by mobile browser; gameplay must still work.
   }
 }
 
@@ -247,7 +251,16 @@ function loop(now) {
   if(running) requestAnimationFrame(loop); else draw(now);
 }
 
-canvas.addEventListener('pointerdown', event => { event.preventDefault(); flap(); });
+function handleGameTouch(event) {
+  event.preventDefault();
+  flap();
+}
+
+if ('PointerEvent' in window) {
+  canvas.addEventListener('pointerdown', handleGameTouch);
+} else {
+  canvas.addEventListener('touchstart', handleGameTouch, { passive: false });
+}
 document.addEventListener('keydown', e => { if(e.code==='Space'){e.preventDefault(); if(!running) start(); else flap();} });
 startBtn.addEventListener('click', start);
 retryBtn.addEventListener('click', start);
