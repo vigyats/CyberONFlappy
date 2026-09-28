@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberON 2026 — Flappy</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="scanlines"></div>
+<div id="bootScreen" class="boot-screen" aria-label="System startup">
+  <div class="boot-terminal">
+    <p class="boot-status"><span class="status-dot"></span> CYBERON NETWORK // SYSTEM ONLINE</p>
+    <h1><span id="bootText"></span><span class="cursor" aria-hidden="true">_</span></h1>
+    <p class="boot-log">[ OK ] SECURE CONNECTION ESTABLISHED</p>
+    <p class="boot-log">[ OK ] GAME MODULE LOADED</p>
+  </div>
+</div>
+<main class="game-shell">
+  <div class="brand">CYBERON 2026 <span>•</span> MINI CTF</div>
+  <h1>FLAPPY <em>CYBER</em></h1>
+  <p class="subtitle">Tap, click, or press <kbd>SPACE</kbd> to flap. Avoid the pipes and beat your best.</p>
+
+  <section class="game-wrap">
+    <canvas id="game" width="900" height="520" aria-label="Flappy Cyber game"></canvas>
+    <div id="overlay" class="overlay">
+      <div id="readyPanel" class="panel">
+        <div class="icon">◈</div>
+        <h2>READY?</h2>
+        <p>Click, tap, or press <kbd>SPACE</kbd> to fly.</p>
+        <button id="startBtn">START GAME</button>
+      </div>
+      <div id="gameOverPanel" class="panel game-over-panel" hidden>
+        <p class="crash-label">RUN TERMINATED</p>
+        <h2>GAME OVER</h2>
+        <p class="final-score">YOUR SCORE <strong id="finalScore">0</strong></p>
+        <p class="reward-copy">Take a screenshot, tag Team Matrix on Instagram, and get a chance to win a mystery reward.</p>
+        <div class="community-links">
+          <a href="https://www.instagram.com/teammatrixscit/" target="_blank" rel="noopener noreferrer">@TEAMMATRIXSCIT ON INSTAGRAM <span>↗</span></a>
+          <a href="https://teammatrix.scit.edu/" target="_blank" rel="noopener noreferrer">TEAM MATRIX WEBSITE <span>↗</span></a>
+          <a href="https://unstop.com/f/e7yZUns" target="_blank" rel="noopener noreferrer">REGISTER ON UNSTOP <span>↗</span></a>
+        </div>
+        <button id="retryBtn">PLAY AGAIN</button>
+      </div>
+    </div>
+    <button id="soundToggle" class="sound-toggle" type="button" aria-label="Turn sound effects off" aria-pressed="true">SFX ON</button>
+  </section>
+
+  <div class="hud">
+    <div>SCORE <strong id="score">0</strong></div>
+    <div>YOUR BEST <strong id="best">0</strong></div>
+  </div>
+
+  <p class="hint">FLAP TO FLY <span>•</span> AVOID THE PIPES <span>•</span> BEAT YOUR BEST</p>
+  <footer class="page-footer"><span>CYBERON26 FLAG</span><code>{{ flag }}</code></footer>
+</main>
+<script src="{{ url_for('static', filename='game.js') }}"></script>
+</body>
+</html>
